@@ -1,0 +1,7 @@
+{
+  "name": "trashtrack",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
