@@ -1,13 +1,32 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">register</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <h1>LOGO</h1>
+	<h2>Create an account</h2>
+	<p>Please, fill the form</p>
+	<form (ngSubmit)="register()" [formGroup]="credentials">
+    <ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="text" placeholder="First Name" formControlName="firstName"></ion-input>
+		</ion-item>
+    <ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="text" placeholder="Last Name" formControlName="lastName"></ion-input>
+		</ion-item>
+		<ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+			<ion-note slot="error" *ngIf="(email!.dirty || email!.touched) && email!.errors"
+				>Email is invalid</ion-note>
+		</ion-item>
+		<ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+			<ion-note slot="error" *ngIf="(password!.dirty || password!.touched) && password!.errors"
+				>Password needs to be 6 characters</ion-note>
+		</ion-item>
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-select placeholder="Select User Role" formControlName="role">
+        <ion-select-option value="normal">Normal</ion-select-option>
+        <ion-select-option value="operator">Operator</ion-select-option>
+      </ion-select>
+		</ion-item>
+    
+		<ion-button type="submit" expand="block" color="secondary" [disabled]="!credentials.valid">Create account</ion-button>
+    <p>Or login <a href="/login">here</a></p>
+	</form>
 </ion-content>
