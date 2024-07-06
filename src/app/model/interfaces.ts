@@ -22,19 +22,23 @@ export interface IUser{
     containersTypes?: ContainerType[]
 }
 
-export enum IncidentType {
-    damage = 'damage',
-    full = 'full',
-    moved = 'moved',
-}
+export type IncidentType = 'damage' | 'full' | 'moved';
 
 export interface ImageObject {
     src: string;
 }
 
 export interface Incident {
-    userId: string;
+    userId?: string;
+    containerId?: string;
     type: IncidentType;
     description: string;
-    images: ImageObject[];
+    images?: ImageObject[];
+}
+
+export interface Container {
+    id: string;
+    type: ContainerType;
+    level: number;
+    incidents?: [];
 }
