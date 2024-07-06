@@ -21,3 +21,24 @@ export interface IUser{
     ratio?: number,
     containersTypes?: ContainerType[]
 }
+
+export type IncidentType = 'damage' | 'full' | 'moved';
+
+export interface ImageObject {
+    src: string;
+}
+
+export interface Incident {
+    userId?: string;
+    containerId?: string;
+    type: IncidentType;
+    description: string;
+    images?: ImageObject[];
+}
+
+export interface Container {
+    id: string;
+    type: ContainerType;
+    level: number;
+    incidents?: [];
+}

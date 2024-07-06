@@ -23,5 +23,9 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./pages/public/register/register.page').then( m => m.RegisterPage)
+  },  {
+    path: 'header',
+    loadComponent: () => import('./shared/header/header.page').then( m => m.HeaderPage)
   },
+
 ];
