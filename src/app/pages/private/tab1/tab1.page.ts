@@ -25,7 +25,9 @@ export class Tab1Page implements OnInit {
     private containersService: ContainersService,
     private incidentsService: IncidentsService
   ) {
-    this.containersService.getContainers().subscribe((containers => this.containers = containers));
+    this.containersService.getContainers().subscribe(containers => {
+      this.containers = containers;
+    });
   }
 
   get firstName() {
