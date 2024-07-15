@@ -37,11 +37,14 @@
 @import '@ionic/angular/css/palettes/dark.system.css';
 
 :root {
-    --warehouse-color: #558B2F;
-    --building-color: #FF9800;
-    --house-color: #0288D1;
-    --shop-color: #7B1FA2;
-    --warehouse-color: #558B2F;
+    --clothes-color:#FF9800;
+    --special-color:#60c915;
+    --glass-color:#355c1a;
+    --paper-color:#100cdf;
+    --plastic-color:#f5ca0e;
+    --organic-color:#815a35;
+    --ordinary-color:#616161;
+
   }
   
   /*
@@ -102,7 +105,7 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .property .icon svg {
@@ -119,15 +122,26 @@
 .property .address {
   color: #9E9E9E;
   font-size: 10px;
-  margin-bottom: 10px;
-  margin-top: 5px;
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 
-.property .features {
+.property .title {
   align-items: flex-end;
   display: flex;
   flex-direction: row;
   gap: 10px;
+  margin-bottom: 5px;
+}
+
+.property .features {
+  font-size: 11px;
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 
 .property .features > div {
@@ -145,12 +159,12 @@
  * Property styles in highlighted state.
  */
 .property.highlight {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
-  height: 80px;
-  padding: 8px 15px;
   width: auto;
+  padding: 8px 15px;
+  height: auto;
 }
 
 .property.highlight::after {
@@ -162,8 +176,8 @@
 }
 
 .property.highlight .icon svg {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
 }
 
 .property .bed {
@@ -179,61 +193,31 @@
 }
 
 /*
- * House icon colors.
+ * Clothes Trash icon colors.
  */
-.property.highlight:has(.fa-house) .icon {
-  color: var(--house-color);
+ .property.highlight:has(.clothes) .icon {
+  color: var(--clothes-color);
+  }
+
+ .property:not(.highlight):has(.clothes) {
+  background-color: var(--clothes-color);
 }
 
-.property:not(.highlight):has(.fa-house) {
-  background-color: var(--house-color);
-}
-
-.property:not(.highlight):has(.fa-house)::after {
-  border-top: 9px solid var(--house-color);
+.property:not(.highlight):has(.clothes)::after {
+  border-top: 9px solid var(--clothes-color);
 }
 
 /*
- * Building icon colors.
+ * Special Trash icon colors.
  */
-.property.highlight:has(.fa-building) .icon {
-  color: var(--building-color);
+ .property.highlight:has(.special) .icon {
+  color: var(--special-color);
+  }
+
+ .property:not(.highlight):has(.special) {
+  background-color: var(--special-color);
 }
 
-.property:not(.highlight):has(.fa-building) {
-  background-color: var(--building-color);
-}
-
-.property:not(.highlight):has(.fa-building)::after {
-  border-top: 9px solid var(--building-color);
-}
-
-/*
- * Warehouse icon colors.
- */
-.property.highlight:has(.fa-warehouse) .icon {
-  color: var(--warehouse-color);
-}
-
-.property:not(.highlight):has(.fa-warehouse) {
-  background-color: var(--warehouse-color);
-}
-
-.property:not(.highlight):has(.fa-warehouse)::after {
-  border-top: 9px solid var(--warehouse-color);
-}
-
-/*
- * Shop icon colors.
- */
-.property.highlight:has(.fa-shop) .icon {
-  color: var(--shop-color);
-}
-
-.property:not(.highlight):has(.fa-shop) {
-  background-color: var(--shop-color);
-}
-
-.property:not(.highlight):has(.fa-shop)::after {
-  border-top: 9px solid var(--shop-color);
+.property:not(.highlight):has(.special)::after {
+  border-top: 9px solid var(--special-color);
 }

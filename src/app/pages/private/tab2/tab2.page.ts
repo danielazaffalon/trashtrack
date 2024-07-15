@@ -10,6 +10,7 @@ import { trashOutline } from 'ionicons/icons';
 import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { Container, ContainerType } from 'src/app/model/interfaces';
+import { ContainersService } from 'src/app/services/containers.service';
 // import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -22,7 +23,7 @@ import { Container, ContainerType } from 'src/app/model/interfaces';
 })
 export class Tab2Page {
 
-  constructor() {
+  constructor(private containersService: ContainersService) {
     addIcons({ trashOutline });
   }
 
@@ -48,19 +49,21 @@ export class Tab2Page {
       center,
       mapId: "4504f8b37365c3d0",
     });
-  
-    for (const property of this.properties) {
-      const advancedMarkerElement = new AdvancedMarkerElement({
-        map,
-        content: this.buildContent(property),
-        position: property.location,
-        title: property.id,
-      });
-  
-      advancedMarkerElement.addListener("click", () => {
-        this.toggleHighlight(advancedMarkerElement, property);
-      });
-    }
+
+    this.containersService.getContainers().subscribe(containers => {
+      for (const property of containers) {
+        const advancedMarkerElement = new AdvancedMarkerElement({
+          map,
+          content: this.buildContent(property),
+          position: property.location,
+          title: property.id,
+        });
+    
+        advancedMarkerElement.addListener("click", () => {
+          this.toggleHighlight(advancedMarkerElement, property);
+        });
+      }
+    });
   }
   
   toggleHighlight(markerView: any, property: any) {
@@ -78,26 +81,18 @@ export class Tab2Page {
     content.classList.add("property");
     content.innerHTML = `
       <div class="icon">
-          <ion-icon aria-hidden="true" name="trash-outline" class="fa-${property.type}"></ion-icon>
+          <ion-icon aria-hidden="true" name="trash-outline" class="${property.type}"></ion-icon>
       </div>
       <div class="details">
-          <div class="price">${property.type}</div>
-          <div class="address">${property.type}</div>
+          <div class="title">${property.name}</div>
+          <div class="features">Type: ${property.type}</div>
+          <div class="features">Fill Level: ${property.level}</div>
+          <div class="address">ID: ${property.id}</div>
+          <div class="address">Register ID: ${property.register_id}</div>
+          <div class="address">${property.address}</div>
           <div class="features">
           <div>
-              <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
-              <span class="fa-sr-only">bedroom</span>
-              <span>${property.type}</span>
-          </div>
-          <div>
-              <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
-              <span class="fa-sr-only">bathroom</span>
-              <span>${property.type}</span>
-          </div>
-          <div>
-              <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
-              <span class="fa-sr-only">size</span>
-              <span>${property.type} ft<sup>2</sup></span>
+              <span class="fa-sr-only">Report incident</span>
           </div>
           </div>
       </div>
@@ -105,22 +100,28 @@ export class Tab2Page {
     return content;
   }
   
-  properties= [{
-    id: '1',
-    type: 'house',
-    level: 5,
+  properties: Container[] = [{
+    id: 'Container 1',
+    type: ContainerType.clothes,
+    level: 80,
     location: {
       lat: 41.414448,
       lng: 2.181070,
     },
+    name: 'name 1',
+    register_id: 1,
+    address: 'address 1',
   }, {
-    id: '2',
-    type: 'house',
-    level: 5,
+    id: 'Container 2',
+    type: ContainerType.special,
+    level: 50,
     location: {
       lat: 41.425126,
       lng: 2.156366,
     },
+    name: 'name 2',
+    register_id: 2,
+    address: 'address 2',
   }];
 
 }
