@@ -1,0 +1,16 @@
+// capacitor-google-map {
+//     display: inline-block;
+//     width: 100%;
+//     height: 100%;
+//   }
+
+/*
+ * Trash icon colors.
+ */
+  .property:not(.highlight):has(.fa-house) {
+    background-color: var(--house-color);
+  }
+  
+  .property:not(.highlight):has(.fa-house)::after {
+    border-top: 9px solid var(--house-color);
+  }

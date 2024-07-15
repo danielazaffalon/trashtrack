@@ -18,6 +18,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)), provideFirebaseApp(() => initializeApp({"projectId":"trashtrack-71125","appId":"1:1098812061883:web:fbafc108cc965589c5119e","storageBucket":"trashtrack-71125.appspot.com","apiKey":"AIzaSyDUnnDAOXOcPyvDay0wroITRswEw5YgmO4","authDomain":"trashtrack-71125.firebaseapp.com","messagingSenderId":"1098812061883","measurementId":"G-XV2VH4R1CF"})), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()),
+    provideRouter(routes, withPreloading(PreloadAllModules)), provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()),
   ],
 });
