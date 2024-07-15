@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { Container } from '../model/interfaces';
-import { IncidentsService } from './incidents.service';
+import { Container} from '../model/interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContainersService {
-
-  constructor(private firestore: Firestore, private incidentsService: IncidentsService) { }
+  constructor(private firestore: Firestore) { }
 
   getContainers(): Observable<Container[]> {
     const containersRef = collection(this.firestore, `containers`);

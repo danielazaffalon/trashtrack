@@ -8,7 +8,7 @@ export enum ContainerType{
     paper = 'paper',
     plastic = 'plastic',
     clothes = 'clothes',
-    oil = 'oil'
+    special = 'special',
 }
 
 export interface IUser{
@@ -37,8 +37,12 @@ export interface Incident {
 }
 
 export interface Container {
-    id: string;
+    id?: string;
     type: ContainerType;
     level: number;
+    location: {
+        lat: number;
+        lon: number;
+    }
     incidents?: [];
 }
