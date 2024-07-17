@@ -1,4 +1,3 @@
-/// <reference types="@types/google.maps" />
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { HeaderPage } from 'src/app/shared/header/header.page';
@@ -6,11 +5,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MapIconComponent } from 'src/app/shared/map-icon/map-icon.component';
 import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
-// import { GoogleMap } from '@capacitor/google-maps';
+import { GoogleMap } from '@capacitor/google-maps';
 import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { Container, ContainerType } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
+import { Router } from '@angular/router';
 // import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -23,7 +23,10 @@ import { ContainersService } from 'src/app/services/containers.service';
 })
 export class Tab2Page {
 
-  constructor(private containersService: ContainersService) {
+  constructor(
+    private containersService: ContainersService,
+    private router: Router
+  ) {
     addIcons({ trashOutline });
   }
 
@@ -75,6 +78,10 @@ export class Tab2Page {
           markerView.zIndex = 1;
     }
   }
+
+  gotToIncidentForm(id: string){
+    this.router.navigate(['/tabs/tab1', id]);
+  }
   
   buildContent(property: any) {
     const content = document.createElement("div");
@@ -92,37 +99,16 @@ export class Tab2Page {
           <div class="address">${property.address}</div>
           <div class="features">
           <div>
-              <span class="fa-sr-only">Report incident</span>
+              <span class="fa-sr-only reportButton">Report incident</span>
           </div>
           </div>
       </div>
       `;
+      content.getElementsByClassName("reportButton")[0].addEventListener("click", () => {
+          this.gotToIncidentForm(property.id);
+      });
     return content;
   }
-  
-  properties: Container[] = [{
-    id: 'Container 1',
-    type: ContainerType.clothes,
-    level: 80,
-    location: {
-      lat: 41.414448,
-      lng: 2.181070,
-    },
-    name: 'name 1',
-    register_id: 1,
-    address: 'address 1',
-  }, {
-    id: 'Container 2',
-    type: ContainerType.special,
-    level: 50,
-    location: {
-      lat: 41.425126,
-      lng: 2.156366,
-    },
-    name: 'name 2',
-    register_id: 2,
-    address: 'address 2',
-  }];
 
 }
 

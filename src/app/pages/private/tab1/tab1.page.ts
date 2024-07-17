@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonTextarea, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonItem, IonInput, IonNote } from '@ionic/angular/standalone';
 import { Container, IncidentType } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
@@ -23,31 +23,22 @@ export class Tab1Page implements OnInit {
   constructor(
     private fb: FormBuilder,
     private containersService: ContainersService,
-    private incidentsService: IncidentsService
+    private incidentsService: IncidentsService,
+    private activateRoute: ActivatedRoute
   ) {
     this.containersService.getContainers().subscribe(containers => {
       this.containers = containers;
     });
   }
 
-  get firstName() {
-		return this.incident.get('type');
-	}
-
-  get lastName() {
-		return this.incident.get('containerId');
-	}
-
-  get email() {
-		return this.incident.get('description');
-	}
-
   ngOnInit() {
+    const id = this.activateRoute.snapshot.paramMap.get('id')!;
+    
 		this.incident = this.fb.group({
-      containerId: ['', [Validators.required]],
+      containerId: [id || '', [Validators.required]],
 			type: ['',[Validators.required]],
 			description: ['',[Validators.required]],
-		});
+		});  
 	}
 
   save() {
@@ -60,3 +51,15 @@ export class Tab1Page implements OnInit {
     });
   }
 }
+
+// get firstName() {
+//   return this.incident.get('type');
+// }
+
+// get lastName() {
+//   return this.incident.get('containerId');
+// }
+
+// get email() {
+//   return this.incident.get('description');
+// }
