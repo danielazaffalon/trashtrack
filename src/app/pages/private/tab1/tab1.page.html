@@ -1,1 +1,9 @@
-<app-incident-form [inputContainerId]="containerId"></app-incident-form>
+<app-header title="Report incident"></app-header>
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">Report incident</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <app-incident-form [inputContainerId]="containerId"></app-incident-form>
+</ion-content>

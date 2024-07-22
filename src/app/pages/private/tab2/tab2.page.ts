@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
-import { HeaderPage } from 'src/app/shared/header/header.page';
+import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MapIconComponent } from 'src/app/shared/map-icon/map-icon.component';
 import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
-import { GoogleMap } from '@capacitor/google-maps';
 import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
-import { Container, ContainerType } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
 import { Router } from '@angular/router';
-// import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderPage, MapIconComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, MapIconComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {

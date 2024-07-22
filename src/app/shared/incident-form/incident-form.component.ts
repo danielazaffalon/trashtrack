@@ -1,19 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IonTextarea, IonSelect, IonSelectOption, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonItem, IonInput, IonNote } from '@ionic/angular/standalone';
+import { IonTextarea, IonSelect, IonSelectOption, IonButton, IonItem, IonInput } from '@ionic/angular/standalone';
 import { Container, IncidentType } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
 import { IncidentsService } from 'src/app/services/incidents.service';
-import { HeaderPage } from 'src/app/shared/header/header.page';
 
 @Component({
   selector: 'app-incident-form',
   templateUrl: './incident-form.component.html',
   styleUrls: ['./incident-form.component.scss'],
   standalone: true,
-  imports: [IonTextarea, IonSelect, IonSelectOption, IonNote, IonInput, IonItem, IonButtons, IonButton, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, HeaderPage, CommonModule, ReactiveFormsModule],
+  imports: [IonTextarea, IonSelect, IonSelectOption, IonInput, IonItem, IonButton, CommonModule, ReactiveFormsModule],
 })
 export class IncidentFormComponent  implements OnInit {
 
@@ -26,7 +24,6 @@ export class IncidentFormComponent  implements OnInit {
     private fb: FormBuilder,
     private containersService: ContainersService,
     private incidentsService: IncidentsService,
-    private activateRoute: ActivatedRoute
   ) {
     this.containersService.getContainers().subscribe(containers => {
       this.containers = containers;
@@ -34,7 +31,6 @@ export class IncidentFormComponent  implements OnInit {
   }
 
   ngOnInit() {
-    // const id = this.activateRoute.snapshot.paramMap.get('id')!;
     
 		this.incident = this.fb.group({
       containerId: [{value: this.inputContainerId || '', disabled: this.inputContainerId}, [Validators.required]],
