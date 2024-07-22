@@ -80,7 +80,7 @@ export class Tab2Page {
   }
 
   gotToIncidentForm(id: string){
-    this.router.navigate(['/tabs/tab1', id]);
+    this.router.navigate(['/tabs/tab1', {id}]);
   }
   
   buildContent(property: any) {

@@ -17,7 +17,7 @@ import { HeaderPage } from 'src/app/shared/header/header.page';
 })
 export class IncidentFormComponent  implements OnInit {
 
-  @Input() incidentId? : string;
+  @Input() inputContainerId: string | null = null;
   incident!: FormGroup;
   types: IncidentType[] = ['damage', 'full', 'moved'];
   containers: Container[] = [];
@@ -37,7 +37,7 @@ export class IncidentFormComponent  implements OnInit {
     // const id = this.activateRoute.snapshot.paramMap.get('id')!;
     
 		this.incident = this.fb.group({
-      containerId: [this.incidentId || '', [Validators.required]],
+      containerId: [{value: this.inputContainerId || '', disabled: this.inputContainerId}, [Validators.required]],
 			type: ['',[Validators.required]],
 			description: ['',[Validators.required]],
 		});  
