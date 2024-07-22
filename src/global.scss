@@ -35,3 +35,189 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+:root {
+    --clothes-color:#FF9800;
+    --special-color:#60c915;
+    --glass-color:#355c1a;
+    --paper-color:#100cdf;
+    --plastic-color:#f5ca0e;
+    --organic-color:#815a35;
+    --ordinary-color:#616161;
+
+  }
+  
+  /*
+   * Optional: Makes the sample page fill the window.
+   */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /*
+   * Always set the map height explicitly to define the size of the div element
+   * that contains the map.
+   */
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+
+/*
+* Property styles in unhighlighted state.
+*/
+.property {
+  align-items: center;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  color: #263238;
+  display: flex;
+  font-size: 14px;
+  gap: 15px;
+  height: 30px;
+  justify-content: center;
+  padding: 4px;
+  position: relative;
+  position: relative;
+  transition: all 0.3s ease-out;
+  width: 30px;
+}
+
+.property::after {
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 9px solid #FFFFFF;
+  content: "";
+  height: 0;
+  left: 50%;
+  position: absolute;
+  top: 95%;
+  transform: translate(-50%, 0);
+  transition: all 0.3s ease-out;
+  width: 0;
+  z-index: 1;
+}
+
+.property .icon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.property .icon svg {
+  height: 20px;
+  width: auto;
+}
+
+.property .details {
+  display: none;
+  flex-direction: column;
+  flex: 1;
+}
+
+.property .address {
+  color: #9E9E9E;
+  font-size: 10px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.property .title {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.property .features {
+  font-size: 11px;
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.property .features > div {
+  align-items: center;
+  background: #F5F5F5;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  font-size: 10px;
+  gap: 5px;
+  padding: 5px;
+}
+
+/*
+ * Property styles in highlighted state.
+ */
+.property.highlight {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
+  width: auto;
+  padding: 8px 15px;
+  height: auto;
+}
+
+.property.highlight::after {
+  border-top: 9px solid #FFFFFF;
+}
+
+.property.highlight .details {
+  display: flex;
+}
+
+.property.highlight .icon svg {
+  width: 80px;
+  height: 80px;
+}
+
+.property .bed {
+  color: #FFA000;
+}
+
+.property .bath {
+  color: #03A9F4;
+}
+
+.property .size {
+  color: #388E3C;
+}
+
+/*
+ * Clothes Trash icon colors.
+ */
+ .property.highlight:has(.clothes) .icon {
+  color: var(--clothes-color);
+  }
+
+ .property:not(.highlight):has(.clothes) {
+  background-color: var(--clothes-color);
+}
+
+.property:not(.highlight):has(.clothes)::after {
+  border-top: 9px solid var(--clothes-color);
+}
+
+/*
+ * Special Trash icon colors.
+ */
+ .property.highlight:has(.special) .icon {
+  color: var(--special-color);
+  }
+
+ .property:not(.highlight):has(.special) {
+  background-color: var(--special-color);
+}
+
+.property:not(.highlight):has(.special)::after {
+  border-top: 9px solid var(--special-color);
+}
