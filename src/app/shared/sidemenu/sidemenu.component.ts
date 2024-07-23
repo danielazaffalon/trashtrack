@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonMenu, IonTitle, IonContent, IonItem, IonList, IonListHeader, IonIcon, IonLabel, IonMenuToggle } from "@ionic/angular/standalone";
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { IonHeader, IonToolbar, IonMenu, IonTitle, IonContent, IonItem, IonList, IonIcon, IonLabel, IonMenuToggle, IonRouterLink } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
 import { map, settings } from 'ionicons/icons';
 
@@ -8,7 +9,7 @@ import { map, settings } from 'ionicons/icons';
   templateUrl: './sidemenu.component.html',
   styleUrls: ['./sidemenu.component.scss'],
   standalone: true,
-  imports: [IonListHeader, IonList, IonItem, IonContent, IonMenu, IonTitle, IonToolbar, IonHeader, IonList, IonListHeader, IonIcon, IonLabel, IonMenuToggle],
+  imports: [RouterModule, IonRouterLink, IonList, IonItem, IonContent, IonMenu, IonTitle, IonToolbar, IonHeader, IonIcon, IonLabel, IonMenuToggle],
 })
 export class SidemenuComponent {
 
