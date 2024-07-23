@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { MapIconComponent } from 'src/app/shared/map-icon/map-icon.component';
 import { addIcons } from 'ionicons';
-import { trashOutline } from 'ionicons/icons';
 import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { ContainersService } from 'src/app/services/containers.service';
@@ -15,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, MapIconComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
@@ -24,7 +22,7 @@ export class Tab2Page {
     private containersService: ContainersService,
     private router: Router
   ) {
-    addIcons({ trashOutline });
+    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg" });
   }
 
   ionViewWillEnter(){
@@ -36,7 +34,7 @@ export class Tab2Page {
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
   
-    // const center = {lat: 37.43238031167444, lng: -122.16795397128632};
+    // const center = {lat: 41.40332742165967, lng: 2.184885862336193};
     const coordinates = await Geolocation.getCurrentPosition();
 
     const center: LatLng = {
@@ -85,7 +83,7 @@ export class Tab2Page {
     content.classList.add("property");
     content.innerHTML = `
       <div class="icon">
-          <ion-icon aria-hidden="true" name="trash-outline" class="${property.type}"></ion-icon>
+          <ion-icon aria-hidden="true" name="dumpster" class="${property.type}"></ion-icon>
       </div>
       <div class="details">
           <div class="title">${property.name}</div>
@@ -101,9 +99,9 @@ export class Tab2Page {
           </div>
       </div>
       `;
-      content.getElementsByClassName("reportButton")[0].addEventListener("click", () => {
-          this.gotToIncidentForm(property.id);
-      });
+    content.getElementsByClassName("reportButton")[0].addEventListener("click", () => {
+      this.gotToIncidentForm(property.id);
+    });
     return content;
   }
 
