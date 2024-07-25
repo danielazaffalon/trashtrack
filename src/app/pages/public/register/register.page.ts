@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonSelect, IonSelectOption, IonContent, IonHeader, IonTitle, IonToolbar, IonInput, IonItem, IonNote, IonButton } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { UserSettingsService } from 'src/app/services/user-settings.service';
 
@@ -18,7 +17,6 @@ export class RegisterPage implements OnInit {
 
   constructor(
     	private fb: FormBuilder,
-		private authService: AuthService,
 		private userSettingsService: UserSettingsService,
 		private router: Router
   ) {
@@ -56,22 +54,12 @@ export class RegisterPage implements OnInit {
 	}
 
 	async register() {
-
 		const {firstName, lastName, email, role, password} = this.credentials.value;
-
-		const user = await this.authService.register({email, password});
-
-		if (user) {
-			this.userSettingsService.addUserSettings({userId: user.user.uid,
-				firstName,
-				lastName,
-				email,
-				role
-			});
-			this.router.navigateByUrl('/tabs', { replaceUrl: true });
-		} else {
-			console.log('Registration failed', 'Please try again!');
-		}
+		this.userSettingsService.addUserSettings({
+			firstName,
+			lastName,
+			role
+		},{email, password}).then(()=>{this.router.navigateByUrl('/tabs', { replaceUrl: true })});
 	}
 
 }
