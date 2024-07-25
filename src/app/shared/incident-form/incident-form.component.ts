@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { IonTextarea, IonSelect, IonSelectOption, IonButton, IonItem, IonInput, IonIcon, IonFabButton, IonGrid, IonRow, IonCol, IonImg } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { camera } from 'ionicons/icons';
+import { camera, trash } from 'ionicons/icons';
 import { Container, IncidentType, IPhoto } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
 import { IncidentsService } from 'src/app/services/incidents.service';
@@ -32,7 +32,7 @@ export class IncidentFormComponent implements OnInit {
     public photoService: PhotoService,
     private router: Router
   ) {
-    addIcons({ camera })
+    addIcons({ camera, trash })
     this.containersService.getContainers().subscribe(containers => {
       this.containers = containers;
     });
@@ -62,6 +62,14 @@ export class IncidentFormComponent implements OnInit {
   async addPhotoToGallery() {
     const newPhoto = await this.photoService.takePhoto();
     this.photos.push(newPhoto);
+    this.incident.patchValue({
+      photos: this.photos
+    });
+  }
+
+  async removePhotoFromGallery(photo: IPhoto) {
+    const index = this.photos.findIndex(_photo => _photo.fileName === photo.fileName);
+    this.photos.splice(index,1);
     this.incident.patchValue({
       photos: this.photos
     });

@@ -17,6 +17,7 @@
       <ion-row>
         <ion-col class="photo-item" size="4" *ngFor="let photo of this.photos; index as position">
           <ion-img [src]="photo.webviewPath"></ion-img>
+          <ion-icon name="trash" class="delete-icon" (click)="removePhotoFromGallery(photo)"></ion-icon>
         </ion-col>
         <ion-col size="4" class="photo-item add-btn" (click)="addPhotoToGallery()">
           <ion-icon name="camera"></ion-icon>
