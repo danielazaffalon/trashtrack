@@ -1,13 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>usersettings</ion-title>
+    <ion-title><ion-icon name="settings"></ion-icon> User Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">usersettings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <form (ngSubmit)="save()" [formGroup]="userSettings">
+    <ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="text" placeholder="First Name" formControlName="firstName"></ion-input>
+		</ion-item>
+    <ion-item fill="solid" class="ion-margin-bottom">
+			<ion-input type="text" placeholder="Last Name" formControlName="lastName"></ion-input>
+		</ion-item>
+		<ion-item fill="solid" class="ion-margin-bottom">
+			<ion-select placeholder="Select User Role" formControlName="role">
+				<ion-select-option value="normal">Normal</ion-select-option>
+				<ion-select-option value="operator">Operator</ion-select-option>
+			</ion-select>
+		</ion-item>
+
+    <ion-button type="submit" expand="block" color="secondary" [disabled]="!userSettings.valid">Update User</ion-button>
+  </form>
 </ion-content>
