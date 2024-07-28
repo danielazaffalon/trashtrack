@@ -27,12 +27,13 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   });
 
-  public async takePhoto(fileName = Date.now() + '.jpeg'): Promise<IPhoto> {
+  public async takePhoto(fileName = Date.now() + '.jpeg', size = {width: 100, height: 100}): Promise<IPhoto> {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
-      quality: 100
+      quality: 100,
+      ...size
     });
 
     const base64Data = await this.readAsBase64(capturedPhoto);

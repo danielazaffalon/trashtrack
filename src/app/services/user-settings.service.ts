@@ -43,6 +43,7 @@ export class UserSettingsService {
   async updateUserSettings(user: IUser) {
     const userId = await this.storage.get('userId');
     const userDocRef = doc(this.firestore, `users/${userId}`);
-    return updateDoc(userDocRef, { ...user });
+    await updateDoc(userDocRef, { ...user });
+    this.storage.set('userSettings',user);
   }
 }
