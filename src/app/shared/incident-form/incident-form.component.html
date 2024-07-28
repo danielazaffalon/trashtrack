@@ -12,5 +12,19 @@
   <ion-item fill="solid" class="ion-margin-bottom">
     <ion-textarea placeholder="describe the incident" formControlName="description"></ion-textarea>
   </ion-item>
+  <ion-item fill="solid" class="ion-margin-bottom">
+    <ion-grid>
+      <ion-row>
+        <ion-col class="photo-item" size="4" *ngFor="let photo of this.photos; index as position">
+          <ion-img [src]="photo.webviewPath"></ion-img>
+          <ion-icon name="trash" class="delete-icon" (click)="removePhotoFromGallery(photo)"></ion-icon>
+        </ion-col>
+        <ion-col size="4" class="photo-item add-btn" (click)="addPhotoToGallery()">
+          <ion-icon name="camera"></ion-icon>
+          Add photo
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
   <ion-button type="submit" expand="block" color="secondary" [disabled]="!incident.valid">Create Incident</ion-button>
 </form>

@@ -9,7 +9,11 @@ import { environment } from './environments/environment';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { IonicStorageModule } from '@ionic/storage-angular';
+
+// Call the element loader before the bootstrapModule/bootstrapApplication call
+defineCustomElements(window);
 
 if (environment.production) {
   enableProdMode();
