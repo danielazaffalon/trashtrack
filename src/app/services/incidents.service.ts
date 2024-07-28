@@ -27,4 +27,11 @@ export class IncidentsService {
     const usersRef = collection(this.firestore, 'incidents');
     return addDoc(usersRef, incident);
   }
+
+  getIncidentByContainer(containerId: string): Observable<Incident[]>{
+    const incidentsRef = collection(this.firestore, `incidents`);
+    const q = query(incidentsRef,where('containerId','==', containerId));
+    const incidents = collectionData(q);
+    return incidents as Observable<Incident[]>;
+  }
 }

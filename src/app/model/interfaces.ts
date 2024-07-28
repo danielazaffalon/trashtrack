@@ -30,6 +30,7 @@ export interface UserAuth{
 export type IncidentType = 'damage' | 'full' | 'moved';
 
 export interface Incident {
+    id?: string;
     userId?: string;
     containerId?: string;
     type: IncidentType;
