@@ -11,8 +11,8 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '',
-    loadChildren: () => import('./pages/private/tabs/tabs.routes').then((m) => m.routes),
+    path: 'tabs',
+    loadChildren: () => import('./pages/private/tabs/tabs.routes').then(m => m.routes),
     ...canActivate(redirectUnauthorizedToLogin)
   },
   {
@@ -23,5 +23,10 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./pages/public/register/register.page').then( m => m.RegisterPage)
+  },
+  {
+    path: 'usersettings',
+    loadComponent: () => import('./pages/private/usersettings/usersettings.page').then( m => m.UsersettingsPage),
+    ...canActivate(redirectUnauthorizedToLogin)
   }
 ];

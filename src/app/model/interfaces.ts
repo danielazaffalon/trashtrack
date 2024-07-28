@@ -14,14 +14,17 @@ export enum ContainerType{
 }
 
 export interface IUser{
-    userId: string,
     firstName: string,
     lastName: string,
-    email: string,
     role: Role,
     img?: string,
     ratio?: number,
     containersTypes?: ContainerType[]
+}
+
+export interface UserAuth{
+    email: string,
+    password: string
 }
 
 export type IncidentType = 'damage' | 'full' | 'moved';
