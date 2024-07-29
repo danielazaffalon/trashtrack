@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonModal, IonTitle, IonHeader, IonToolbar, IonButton, IonButtons, IonContent, IonItem, IonCheckbox, IonFab, IonFabButton, IonRow, IonIcon, IonCol, IonGrid } from "@ionic/angular/standalone";
 import { ContainerType } from 'src/app/model/interfaces';
+import { filterOutline, locate } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-containers-filter',
@@ -18,9 +20,11 @@ export class ContainersFilterComponent {
 
   @Input() selectedTypes!: ContainerType[];
   @Output() setNewFilter: EventEmitter<ContainerType[]> = new EventEmitter();
+  @Output() setMapCenter: EventEmitter<void> = new EventEmitter();
 
-  constructor() { }
-
+  constructor() {
+    addIcons({ 'filter-outline': filterOutline, locate });
+  }
 
   setModalOpen(value: boolean) {
     this.isModalOpen = value;
@@ -39,6 +43,10 @@ export class ContainersFilterComponent {
   setFilter() {
     this.setNewFilter.emit(this.filter);
     this.setModalOpen(false);
+  }
+
+  centerMapInCurrentLocation() {
+    this.setMapCenter.emit();
   }
 
 }

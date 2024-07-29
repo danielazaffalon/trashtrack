@@ -210,10 +210,8 @@
   border-top: 9px solid var(--special-color);
 }
 
-.current-position {
-  box-shadow: 1.5px 1.5px 5px black;
-  background-image: radial-gradient(blue 40%, black 90%);
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
+.current-position ion-icon {
+  width: 40px;
+  height: 40px;
+  color: #100cdf;
 }

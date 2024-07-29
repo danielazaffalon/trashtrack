@@ -1,8 +1,34 @@
-.filter-btn {
-    top: 100px;
-}
-
 ion-grid {
     display: flex;
     justify-content: flex-end;
+}
+
+.map-buttons {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    gap: 20px;
+    bottom: 50px;
+    bottom: 267px;
+}
+
+.map-action-btn {
+    background: rgb(255, 255, 255);
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    text-transform: none;
+    appearance: none;
+    cursor: pointer;
+    user-select: none;
+    --pegman-scaleX: 1;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    border-radius: 2px;
+    width: 40px;
+    height: 40px;
+}
+
+.map-action-btn ion-icon {
+    font-size: 25px;
+    color: #666666;
 }
