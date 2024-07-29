@@ -7,33 +7,40 @@ import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { ContainersService } from 'src/app/services/containers.service';
 import { Router } from '@angular/router';
+import { filterOutline } from 'ionicons/icons';
+import { Container, ContainerType } from 'src/app/model/interfaces';
+import { ContainersFilterComponent } from "../../../shared/containers-filter/containers-filter.component";
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, HeaderComponent, ContainersFilterComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class Tab2Page {
+  map?: any;
+  AdvancedMarkerElement?: any;
+  markers: any[] = [];
+  selectedTypes: ContainerType[] = Object.values(ContainerType);
 
   constructor(
     private containersService: ContainersService,
     private router: Router
   ) {
-    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg" });
+    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg", 'filter-outline': filterOutline });
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.initMap();
   }
 
-  async initMap() {
+  private async initMap() {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-  
+    this.AdvancedMarkerElement = AdvancedMarkerElement;
     // const center = {lat: 41.40332742165967, lng: 2.184885862336193};
     const coordinates = await Geolocation.getCurrentPosition();
 
@@ -42,26 +49,31 @@ export class Tab2Page {
       lng: coordinates.coords.longitude
     }
 
-    const map = new Map(document.getElementById("map") as HTMLElement, {
+    this.map = new Map(document.getElementById("map") as HTMLElement, {
       zoom: 11,
       center,
       mapId: "4504f8b37365c3d0",
     });
+    this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
+  }
 
-    this.containersService.getContainers().subscribe(containers => {
-      for (const property of containers) {
-        const advancedMarkerElement = new AdvancedMarkerElement({
-          map,
-          content: this.buildContent(property),
-          position: property.location,
-          title: property.id,
-        });
-    
-        advancedMarkerElement.addListener("click", () => {
-          this.toggleHighlight(advancedMarkerElement, property);
-        });
-      }
-    });
+  private onContainerListChanged = (containers: Container[]) => {
+    for(const marker of this.markers) {
+      marker.setMap(null);
+    }
+    for (const property of containers) {
+      const advancedMarkerElement = new this.AdvancedMarkerElement({
+        map: this.map,
+        content: this.buildContent(property),
+        position: property.location,
+        title: property.id,
+      });
+  
+      advancedMarkerElement.addListener("click", () => {
+        this.toggleHighlight(advancedMarkerElement, property);
+      });
+      this.markers.push(advancedMarkerElement);
+    }
   }
   
   toggleHighlight(markerView: any, property: any) {
@@ -105,37 +117,8 @@ export class Tab2Page {
     return content;
   }
 
+  setFilters(filter: ContainerType[]) {
+    this.selectedTypes = filter;
+    this.containersService.getContainers(filter).subscribe(this.onContainerListChanged);
+  }
 }
-
-// async initMap(){
-//   const apiKey = environment.mapKey
-
-//   const mapRef = document.getElementById('map')!;
-  
-//   const coordinates = await Geolocation.getCurrentPosition();
-
-//   const location: LatLng = {
-//     lat: coordinates.coords.latitude,
-//     lng: coordinates.coords.longitude
-//   }
-
-//   const newMap = await GoogleMap.create({
-//     id: 'my-map', // Unique identifier for this map instance
-//     element: mapRef, // reference to the capacitor-google-map element
-//     apiKey: apiKey, // Your Google Maps API Key
-//     config: {
-//       center: location,
-//       zoom: 8, // The initial zoom level to be rendered by the map
-//     },
-//   });
-
-//   // Add a marker to the map
-//   const markerId = await newMap.addMarker({
-//     coordinate: location
-//   });
-
-//   // Move the map programmatically
-//   await newMap.setCamera({
-//     coordinate: location
-//   });
-// }
