@@ -15,13 +15,13 @@ export class UserSettingsService {
     private storage : StorageService
   ) { }
 
-  getUserSettings(id: string): Observable<IUser> {
+  getUserSettings(id: string, callback: () => void): void {
     const userDocRef = doc(this.firestore, `users/${id}`);
     const user = docData(userDocRef,{idField: 'id'});
-    user.subscribe(userSettings => {
-      this.storage.set('userSettings',userSettings);
+    user.subscribe(async userSettings => {
+      await this.storage.set('userSettings',userSettings);
+      callback();
     });
-    return user as Observable<IUser>;
   }
 
   async addUserSettings(user: IUser, authU: UserAuth) {
