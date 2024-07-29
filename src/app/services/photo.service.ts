@@ -40,7 +40,6 @@ export class PhotoService {
 
     return {
       fileName,
-      webviewPath: capturedPhoto.webPath,
       base64Data,
     };
   }

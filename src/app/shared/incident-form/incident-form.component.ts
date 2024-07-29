@@ -20,10 +20,11 @@ import { PhotoService } from 'src/app/services/photo.service';
 export class IncidentFormComponent implements OnInit {
 
   @Input() inputContainerId: string | null = null;
+  @Input() incidentId: string | null = null;
   incident!: FormGroup;
   types: IncidentType[] = ['damage', 'full', 'moved'];
   containers: Container[] = [];
-  photos: IPhoto[] = [];
+  images: IPhoto[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -39,39 +40,54 @@ export class IncidentFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-		this.incident = this.fb.group({
+    this.incident = this.fb.group({
       containerId: [{value: this.inputContainerId || '', disabled: this.inputContainerId}, [Validators.required]],
-			type: ['',[Validators.required]],
-			description: ['',[Validators.required]],
-      photos: [this.photos, []]
-		});  
+      type: ['',[Validators.required]],
+      description: ['',[Validators.required]],
+      images: [[], []]
+    });
+
+    if(this.incidentId){
+      this.incidentsService.getIncidentById(this.incidentId).subscribe(incident => {
+        this.incident.patchValue(incident);
+        this.images = incident.images?.map((image,index) => ({
+          base64Data: image,
+          fileName: index.toString()
+        }))??[];
+      });
+    }
 	}
 
   async save() {
-    const {containerId, type, description, photos} = this.incident.value;
-    await this.incidentsService.addIncident({
-      containerId: containerId?? this.inputContainerId,
-      type,
-      description,
-      images: photos.map((photo: IPhoto) => photo.base64Data)
-    });
-    this.router.navigate(['/tabs/tab2']);
+    const {containerId, type, description, images} = this.incident.value;
+    if(this.incidentId){
+      await this.incidentsService.updateIncident(this.incidentId, { containerId, type, description, images });
+      this.router.navigate(['/tabs/tab3', { containerId }]);
+    }
+    else{
+      await this.incidentsService.addIncident({
+        containerId: containerId?? this.inputContainerId,
+        type,
+        description,
+        images
+      });
+      this.router.navigate(['/tabs/tab2']);
+    }
   }
 
   async addPhotoToGallery() {
     const newPhoto = await this.photoService.takePhoto();
-    this.photos.push(newPhoto);
+    this.images.push(newPhoto);
     this.incident.patchValue({
-      photos: this.photos
+      images: this.images.map(image => image.base64Data)
     });
   }
 
-  async removePhotoFromGallery(photo: IPhoto) {
-    const index = this.photos.findIndex(_photo => _photo.fileName === photo.fileName);
-    this.photos.splice(index,1);
+  async removePhotoFromGallery(image: IPhoto) {
+    const index = this.images.findIndex(_image => _image.fileName === image.fileName);
+    this.images.splice(index,1);
     this.incident.patchValue({
-      photos: this.photos
+      images: this.images.map(image => image.base64Data)
     });
   }
 }

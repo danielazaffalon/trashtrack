@@ -15,8 +15,8 @@
   <ion-item fill="solid" class="ion-margin-bottom">
     <ion-grid>
       <ion-row>
-        <ion-col class="photo-item" size="4" *ngFor="let photo of this.photos; index as position">
-          <ion-img [src]="photo.webviewPath"></ion-img>
+        <ion-col class="photo-item" size="4" *ngFor="let photo of this.images; index as position">
+          <ion-img [src]="photo.base64Data"></ion-img>
           <ion-icon name="trash" class="delete-icon" (click)="removePhotoFromGallery(photo)"></ion-icon>
         </ion-col>
         <ion-col size="4" class="photo-item add-btn" (click)="addPhotoToGallery()">
@@ -26,5 +26,6 @@
       </ion-row>
     </ion-grid>
   </ion-item>
-  <ion-button type="submit" expand="block" color="secondary" [disabled]="!incident.valid">Create Incident</ion-button>
+  <ion-button *ngIf="incidentId" type="submit" expand="block" color="secondary" [disabled]="!incident.valid">Edit Incident</ion-button>
+  <ion-button *ngIf="!incidentId" type="submit" expand="block" color="secondary" [disabled]="!incident.valid">Create Incident</ion-button>
 </form>

@@ -7,15 +7,20 @@
     min-height: 70px;
 }
 
-.delete-icon {
+.edit-icon {
     position: absolute;
     background-color: white;
     padding: 5px;
     border-radius: 15px;
     top: 10px;
-    left: 10px;
+    right: 10px;
 }
 
 .add-btn {
     border: 1px grey dashed;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: flex-end;
 }
