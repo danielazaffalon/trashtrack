@@ -7,7 +7,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { ContainersService } from 'src/app/services/containers.service';
 import { Router } from '@angular/router';
-import { filterOutline } from 'ionicons/icons';
+import { filterOutline, locate } from 'ionicons/icons';
 import { Container, ContainerType } from 'src/app/model/interfaces';
 import { ContainersFilterComponent } from "../../../shared/containers-filter/containers-filter.component";
 
@@ -29,7 +29,7 @@ export class Tab2Page {
     private containersService: ContainersService,
     private router: Router
   ) {
-    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg", 'filter-outline': filterOutline });
+    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg", 'filter-outline': filterOutline, locate });
   }
 
   ionViewWillEnter() {
@@ -50,10 +50,18 @@ export class Tab2Page {
     }
 
     this.map = new Map(document.getElementById("map") as HTMLElement, {
-      zoom: 11,
+      zoom: 14,
       center,
       mapId: "4504f8b37365c3d0",
     });
+
+    new AdvancedMarkerElement({
+      map: this.map,
+      content: this.buildCurrentPositionMarker(),
+      position: center,
+      zIndex: 10
+    });
+
     this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
   }
 
@@ -89,6 +97,10 @@ export class Tab2Page {
   gotToIncidentForm(id: string){
     this.router.navigate(['/tabs/tab1', {id}]);
   }
+
+  gotToIncidentsList(containerId: string){
+    this.router.navigate(['/tabs/tab3', { containerId }]);
+  }
   
   buildContent(property: any) {
     const content = document.createElement("div");
@@ -108,12 +120,24 @@ export class Tab2Page {
           <div>
               <span class="fa-sr-only reportButton">Report incident</span>
           </div>
+          <div>
+              <span class="fa-sr-only listIncidentsBtn">View incidents</span>
+          </div>
           </div>
       </div>
       `;
     content.getElementsByClassName("reportButton")[0].addEventListener("click", () => {
       this.gotToIncidentForm(property.id);
     });
+    content.getElementsByClassName("listIncidentsBtn")[0].addEventListener("click", ()=>{
+      this.gotToIncidentsList(property.id);
+    })
+    return content;
+  }
+
+  buildCurrentPositionMarker() {
+    const content = document.createElement("div");
+    content.classList.add("current-position");
     return content;
   }
 
