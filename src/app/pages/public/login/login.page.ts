@@ -43,8 +43,9 @@ export class LoginPage implements OnInit {
 
 		const user = await this.authService.login(this.credentials.value);
 		if (user) {
-			this.userSettings.getUserSettings(user.user.uid);
-			this.router.navigateByUrl('/tabs', { replaceUrl: true });
+			this.userSettings.getUserSettings(user.user.uid, () => {
+				this.router.navigateByUrl('/tabs', { replaceUrl: true });
+			});
 		} else {
 			console.log('Login failed', 'Please try again!');
 		}
