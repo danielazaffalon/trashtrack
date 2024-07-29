@@ -13,12 +13,14 @@ import { IonContent, IonHeader, IonToolbar, IonTitle } from "@ionic/angular/stan
 })
 export class Tab1Page implements OnInit {
   containerId: string | null = null;
+  incidentId: string | null = null;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.containerId = params['id'] || null;
+      this.containerId = params['containerId'] || null;
+      this.incidentId = params['id'] || null;
     });
   }
 }

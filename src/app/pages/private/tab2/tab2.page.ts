@@ -112,8 +112,8 @@ export class Tab2Page {
     }
   }
 
-  gotToIncidentForm(id: string){
-    this.router.navigate(['/tabs/tab1', {id}]);
+  gotToIncidentForm(containerId: string){
+    this.router.navigate(['/tabs/tab1', { containerId }]);
   }
 
   gotToIncidentsList(containerId: string){

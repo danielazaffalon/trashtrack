@@ -55,5 +55,4 @@ export interface Container {
 export interface IPhoto {
     fileName: string;
     base64Data: string;
-    webviewPath?: string;
 }
