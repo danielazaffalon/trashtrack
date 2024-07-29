@@ -209,3 +209,9 @@
 .property:not(.highlight):has(.special)::after {
   border-top: 9px solid var(--special-color);
 }
+
+.current-position ion-icon {
+  width: 40px;
+  height: 40px;
+  color: #100cdf;
+}
