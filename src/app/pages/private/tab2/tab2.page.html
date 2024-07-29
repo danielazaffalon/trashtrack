@@ -7,5 +7,5 @@
     </ion-toolbar>
   </ion-header>
   <div id="map"></div>
-  <app-containers-filter [selectedTypes]="selectedTypes" (setNewFilter)="setFilters($event)"></app-containers-filter>
+  <app-containers-filter [selectedTypes]="selectedTypes" (setNewFilter)="setFilters($event)" (setMapCenter)="setMapCenter()"></app-containers-filter>
 </ion-content>

@@ -13,7 +13,7 @@ export class ContainersService {
     const containersRef = collection(this.firestore, `containers`);
     if (types?.length) {
       const q = query(containersRef, where('type','in', types));
-      return collectionData(q) as Observable<Container[]>;
+      return collectionData(q, { idField: 'id'}) as Observable<Container[]>;
     }
     return collectionData(containersRef, { idField: 'id'}) as Observable<Container[]>;
   }

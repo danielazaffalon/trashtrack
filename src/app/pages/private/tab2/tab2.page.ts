@@ -7,9 +7,12 @@ import { Geolocation } from '@capacitor/geolocation';
 import { LatLng } from '@capacitor/google-maps/dist/typings/definitions';
 import { ContainersService } from 'src/app/services/containers.service';
 import { Router } from '@angular/router';
-import { filterOutline, locate } from 'ionicons/icons';
-import { Container, ContainerType } from 'src/app/model/interfaces';
+import { Container, ContainerType, IUser, Role } from 'src/app/model/interfaces';
 import { ContainersFilterComponent } from "../../../shared/containers-filter/containers-filter.component";
+import { man } from 'ionicons/icons';
+import { StorageService } from 'src/app/services/storage.service';
+
+const UPDATE_POSITION_TIME = 2000;
 
 @Component({
   selector: 'app-tab2',
@@ -23,20 +26,35 @@ export class Tab2Page {
   map?: any;
   AdvancedMarkerElement?: any;
   markers: any[] = [];
+  currentPositionMarker: any = null;
+  currentPositionHandler: any;
   selectedTypes: ContainerType[] = Object.values(ContainerType);
+  userIcon: string = '';
 
   constructor(
     private containersService: ContainersService,
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) {
-    addIcons({ dumpster: "../../../../assets/icon/dumpster-solid.svg", 'filter-outline': filterOutline, locate });
+    addIcons({
+      dumpster: "../../../../assets/icon/dumpster-solid.svg",
+      [Role.operator]: "../../../../assets/icon/truck.svg",
+      [Role.normal]: man,
+    });
   }
 
   ionViewWillEnter() {
     this.initMap();
   }
 
+  ionViewWillLeave() {
+    clearInterval(this.currentPositionHandler);
+  }
+
   private async initMap() {
+    // Get user role to define icon
+    const { role } = await this.storage.get('userSettings') as IUser;
+
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
@@ -55,14 +73,14 @@ export class Tab2Page {
       mapId: "4504f8b37365c3d0",
     });
 
-    new AdvancedMarkerElement({
+    this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
+    this.currentPositionMarker = new this.AdvancedMarkerElement({
       map: this.map,
-      content: this.buildCurrentPositionMarker(),
+      content: this.buildCurrentPositionMarker(role),
       position: center,
       zIndex: 10
     });
-
-    this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
+    this.currentPositionHandler = setInterval(this.updateCurrentPosition, UPDATE_POSITION_TIME);
   }
 
   private onContainerListChanged = (containers: Container[]) => {
@@ -72,7 +90,7 @@ export class Tab2Page {
     for (const property of containers) {
       const advancedMarkerElement = new this.AdvancedMarkerElement({
         map: this.map,
-        content: this.buildContent(property),
+        content: this.buildContainerMarker(property),
         position: property.location,
         title: property.id,
       });
@@ -102,20 +120,20 @@ export class Tab2Page {
     this.router.navigate(['/tabs/tab3', { containerId }]);
   }
   
-  buildContent(property: any) {
+  buildContainerMarker(container: any) {
     const content = document.createElement("div");
     content.classList.add("property");
     content.innerHTML = `
       <div class="icon">
-          <ion-icon aria-hidden="true" name="dumpster" class="${property.type}"></ion-icon>
+          <ion-icon aria-hidden="true" name="dumpster" class="${container.type}"></ion-icon>
       </div>
       <div class="details">
-          <div class="title">${property.name}</div>
-          <div class="features">Type: ${property.type}</div>
-          <div class="features">Fill Level: ${property.level}</div>
-          <div class="address">ID: ${property.id}</div>
-          <div class="address">Register ID: ${property.register_id}</div>
-          <div class="address">${property.address}</div>
+          <div class="title">${container.name}</div>
+          <div class="features">Type: ${container.type}</div>
+          <div class="features">Fill Level: ${container.level}</div>
+          <div class="address">ID: ${container.id}</div>
+          <div class="address">Register ID: ${container.register_id}</div>
+          <div class="address">${container.address}</div>
           <div class="features">
           <div>
               <span class="fa-sr-only reportButton">Report incident</span>
@@ -127,22 +145,41 @@ export class Tab2Page {
       </div>
       `;
     content.getElementsByClassName("reportButton")[0].addEventListener("click", () => {
-      this.gotToIncidentForm(property.id);
+      this.gotToIncidentForm(container.id);
     });
     content.getElementsByClassName("listIncidentsBtn")[0].addEventListener("click", ()=>{
-      this.gotToIncidentsList(property.id);
+      this.gotToIncidentsList(container.id);
     })
     return content;
   }
 
-  buildCurrentPositionMarker() {
+  buildCurrentPositionMarker(role: string) {
     const content = document.createElement("div");
     content.classList.add("current-position");
+    content.innerHTML = `<ion-icon aria-hidden="true" name="${role}"></ion-icon>`;
     return content;
   }
 
   setFilters(filter: ContainerType[]) {
     this.selectedTypes = filter;
     this.containersService.getContainers(filter).subscribe(this.onContainerListChanged);
+  }
+
+  updateCurrentPosition = async () => {
+    const { lat, lng } = this.currentPositionMarker.position; 
+    const { coords: { latitude, longitude }} = await Geolocation.getCurrentPosition();
+    if (latitude === lat && longitude === lng) return;
+
+    const center: LatLng = { lat, lng };
+    this.currentPositionMarker.position = center;
+  }
+
+  async setMapCenter() {
+    const {coords: {latitude, longitude }} = await Geolocation.getCurrentPosition();
+    const center: LatLng = {
+      lat: latitude,
+      lng: longitude
+    }
+    this.map?.setCenter(center);
   }
 }
