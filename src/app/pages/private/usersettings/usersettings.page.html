@@ -11,11 +11,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-	<ion-item fill="solid" class="ion-margin-bottom">
+	<ion-item class="">
 		<div class="outer">
 			<div class="profile-img">
 				<ion-icon name="person" *ngIf="!this.userSettings.value.img" class="icon-img"></ion-icon>
-				<ion-img [src]="this.userSettings.value.img" *ngIf="this.userSettings.value.img"></ion-img>
+				<img id="user-image" [src]="this.userSettings.value.img" *ngIf="this.userSettings.value.img">
 			</div>
 			<button class="inner" (click)="uploadPhoto()">
 				<ion-icon name="camera" size="large"></ion-icon>

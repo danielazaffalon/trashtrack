@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonSelect, IonSelectOption, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonList, IonRow, IonCol, IonImg, IonIcon, IonGrid, IonButton } from '@ionic/angular/standalone';
-import { Container, Incident } from 'src/app/model/interfaces';
+import { Container, Incident, IUser, Role } from 'src/app/model/interfaces';
 import { ContainersService } from 'src/app/services/containers.service';
 import { IncidentsService } from 'src/app/services/incidents.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { addIcons } from 'ionicons';
 import { close, pencil, trash } from 'ionicons/icons';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-tab3',
@@ -22,13 +23,16 @@ export class Tab3Page {
 
   containers: Container[] = [];
   incidents: Incident[] = [];
-  incidentsSubscription: any; 
+  incidentsSubscription: any;
+  operator: boolean = false;
+  userId: string = '';
 
   constructor(
     private containersService: ContainersService,
     private incidentsService: IncidentsService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: StorageService
   ) {
     this.containersService.getContainers().subscribe(containers => {
       this.containers = containers;
@@ -41,6 +45,13 @@ export class Tab3Page {
   }
 
   ionViewWillEnter() {
+    this.storage.get('userSettings').then((user: IUser) => {
+      this.operator = user.role === Role.operator;
+    });
+    this.storage.get('userId').then(id => {
+      this.userId = id;
+    })
+
     this.route.params.subscribe(params => {
       const containerId = params['containerId'] || null;
       if(containerId) {

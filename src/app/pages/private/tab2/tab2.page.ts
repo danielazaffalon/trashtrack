@@ -30,6 +30,7 @@ export class Tab2Page {
   currentPositionHandler: any;
   selectedTypes: ContainerType[] = Object.values(ContainerType);
   userIcon: string = '';
+  containersSubscription: any = null;
 
   constructor(
     private containersService: ContainersService,
@@ -73,12 +74,12 @@ export class Tab2Page {
       mapId: "4504f8b37365c3d0",
     });
 
-    this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
+    this.containersSubscription = this.containersService.getContainers(this.selectedTypes).subscribe(this.onContainerListChanged);
     this.currentPositionMarker = new this.AdvancedMarkerElement({
       map: this.map,
       content: this.buildCurrentPositionMarker(role),
       position: center,
-      zIndex: 10
+      zIndex: 1
     });
     this.currentPositionHandler = setInterval(this.updateCurrentPosition, UPDATE_POSITION_TIME);
   }
@@ -87,22 +88,22 @@ export class Tab2Page {
     for(const marker of this.markers) {
       marker.setMap(null);
     }
-    for (const property of containers) {
+    for (const container of containers) {
       const advancedMarkerElement = new this.AdvancedMarkerElement({
         map: this.map,
-        content: this.buildContainerMarker(property),
-        position: property.location,
-        title: property.id,
+        content: this.buildContainerMarker(container),
+        position: container.location,
+        title: container.id,
       });
   
       advancedMarkerElement.addListener("click", () => {
-        this.toggleHighlight(advancedMarkerElement, property);
+        this.toggleHighlight(advancedMarkerElement);
       });
       this.markers.push(advancedMarkerElement);
     }
   }
   
-  toggleHighlight(markerView: any, property: any) {
+  toggleHighlight(markerView: any) {
     if (markerView.content.classList.contains("highlight")) {
           markerView.content.classList.remove("highlight");
           markerView.zIndex = null;
@@ -122,10 +123,10 @@ export class Tab2Page {
   
   buildContainerMarker(container: any) {
     const content = document.createElement("div");
-    content.classList.add("property");
+    content.classList.add("container");
     content.innerHTML = `
-      <div class="icon">
-          <ion-icon aria-hidden="true" name="dumpster" class="${container.type}"></ion-icon>
+      <div class="icon ${container.type}">
+          <ion-icon aria-hidden="true" name="dumpster"></ion-icon>
       </div>
       <div class="details">
           <div class="title">${container.name}</div>
@@ -162,7 +163,8 @@ export class Tab2Page {
 
   setFilters(filter: ContainerType[]) {
     this.selectedTypes = filter;
-    this.containersService.getContainers(filter).subscribe(this.onContainerListChanged);
+    this.containersSubscription?.unsubscribe();
+    this.containersSubscription = this.containersService.getContainers(filter).subscribe(this.onContainerListChanged);
   }
 
   updateCurrentPosition = async () => {

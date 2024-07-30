@@ -27,7 +27,7 @@ export class PhotoService {
     reader.readAsDataURL(blob);
   });
 
-  public async takePhoto(fileName = Date.now() + '.jpeg', size = {width: 100, height: 100}): Promise<IPhoto> {
+  public async takePhoto(fileName = Date.now() + '.jpeg', size = {width: 400, height: 400}): Promise<IPhoto> {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
