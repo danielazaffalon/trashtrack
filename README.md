@@ -54,32 +54,32 @@ Once the application is up and running, you can:
 The project structure is as follows:
 
 ´´´
-├── app/ # Main app module and components
-│ ├── model/ # Shared components
-│ │ └── interfaces.ts/ # Interfaces
-│ ├── pages/ # App pages
-│ │ ├── Private/ # Private pages
-│ │ │ ├── tab1/ # Tab1 Page
-│ │ │ ├── tab2/ # Tab2 Page
-│ │ │ ├── tab3/ # Tab3 Page
-│ │ │ ├── tabs/ # Tabs Routing and Component
-│ │ │ └── usersettings/ # User Settings Page
-│ │ └── Public/ # Public pages
-│ │ │ ├── login/ # Login Page
-│ │ │ └── register/ # Register Page
-│ ├── services/ # Services
-│ │ ├── auth/ # Auth Service
-│ │ ├── containers/ # Containers Service
-│ │ ├── incidents/ # Incidents Service
-│ │ ├── photo/ # Photo Service
-│ │ ├── storage/ # Storage Service
-│ │ └── user-settings/ # User Settings Service
-│ ├── Shared/ # Shared
-│ │ ├── containers-filter/ # Containers Filter Component
-│ │ ├── header/ # header Component
-│ │ ├── incident-form/ # incident Form Component
-│ │ └── sidemenu/ # Side Menu Component
-└── app/ # App Component
+├── app/ # Main app module and components  
+│ ├── model/ # Shared components  
+│ │ └── interfaces.ts/ # Interfaces  
+│ ├── pages/ # App pages  
+│ │ ├── Private/ # Private pages  
+│ │ │ ├── tab1/ # Tab1 Page  
+│ │ │ ├── tab2/ # Tab2 Page  
+│ │ │ ├── tab3/ # Tab3 Page  
+│ │ │ ├── tabs/ # Tabs Routing and Component  
+│ │ │ └── usersettings/ # User Settings Page  
+│ │ └── Public/ # Public pages  
+│ │ │ ├── login/ # Login Page  
+│ │ │ └── register/ # Register Page  
+│ ├── services/ # Services  
+│ │ ├── auth/ # Auth Service  
+│ │ ├── containers/ # Containers Service  
+│ │ ├── incidents/ # Incidents Service  
+│ │ ├── photo/ # Photo Service  
+│ │ ├── storage/ # Storage Service  
+│ │ └── user-settings/ # User Settings Service  
+│ ├── Shared/ # Shared  
+│ │ ├── containers-filter/ # Containers Filter Component  
+│ │ ├── header/ # header Component  
+│ │ ├── incident-form/ # incident Form Component  
+│ │ └── sidemenu/ # Side Menu Component  
+└── app/ # App Component  
 ´´´
 
 ## Contributing
