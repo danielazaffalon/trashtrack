@@ -29,7 +29,7 @@
         <ion-card-header>
           <ion-card-title>
             {{incident.type}}
-            <div class="buttons-container">
+            <div *ngIf="operator || userId === incident.userId" class="buttons-container">
               <ion-button shape="round" size="small" fill="clear" color="dark" (click)="editIncident(incident.id!)">
                 <ion-icon slot="icon-only" name="pencil"></ion-icon>
               </ion-button>

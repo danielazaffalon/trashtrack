@@ -47,3 +47,9 @@ form{
 ion-button {
     padding-top: 20px;
 }
+
+.profile-img img {
+    max-width: unset;
+    width: 200px;
+    height: auto;
+}
