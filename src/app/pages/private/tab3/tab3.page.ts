@@ -6,7 +6,7 @@ import { ContainersService } from 'src/app/services/containers.service';
 import { IncidentsService } from 'src/app/services/incidents.service';
 import { HeaderComponent } from 'src/app/shared/header/header.component';
 import { addIcons } from 'ionicons';
-import { close, pencil } from 'ionicons/icons';
+import { close, pencil, trash } from 'ionicons/icons';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -35,7 +35,8 @@ export class Tab3Page {
     });
     addIcons({
       close,
-      pencil
+      pencil,
+      trash
     });
   }
 
@@ -55,8 +56,12 @@ export class Tab3Page {
     });
   }
   
-  editIncident(incident: Incident){
-    this.router.navigate(['/tabs/tab1', {id: incident.id}]);
+  editIncident(id: string){
+    this.router.navigate(['/tabs/tab1', { id }]);
+  }
+
+  removeIncident(id: string){
+    this.incidentsService.removeIncident(id);
   }
 
   clear() {

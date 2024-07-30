@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Incident } from '../model/interfaces';
-import { Firestore, collection, collectionData, addDoc, updateDoc, query, where, doc, docData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, updateDoc, query, where, doc, docData, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 
@@ -23,21 +23,26 @@ export class IncidentsService {
   }
 
   getIncidentById(id: string): Observable<Incident> {
-    const userDocRef = doc(this.firestore, `incidents/${id}`);
-    const incident = docData(userDocRef,{idField: 'id'});
+    const incidentDocRef = doc(this.firestore, `incidents/${id}`);
+    const incident = docData(incidentDocRef,{idField: 'id'});
     return incident as Observable<Incident>;
   }
 
   addIncident(incident: Incident) {
     incident.userId = this.auth.currentUser?.uid!;
-    const usersRef = collection(this.firestore, 'incidents');
-    return addDoc(usersRef, incident);
+    const incidentsRef = collection(this.firestore, 'incidents');
+    return addDoc(incidentsRef, incident);
   }
 
   async updateIncident(incidentId: string, incident: Incident) {
     incident.userId = this.auth.currentUser?.uid!;
-    const userDocRef = doc(this.firestore, `incidents/${incidentId}`);
-    await updateDoc(userDocRef, { ...incident });
+    const incidentDocRef = doc(this.firestore, `incidents/${incidentId}`);
+    await updateDoc(incidentDocRef, { ...incident });
+  }
+
+  removeIncident(id: string) {
+    const incidentDocRef = doc(this.firestore, `incidents/${id}`);
+    return deleteDoc(incidentDocRef);
   }
 
   getIncidentByContainer(containerId: string): Observable<Incident[]>{

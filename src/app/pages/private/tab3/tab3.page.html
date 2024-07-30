@@ -29,9 +29,14 @@
         <ion-card-header>
           <ion-card-title>
             {{incident.type}}
-            <ion-button shape="round" size="small" fill="clear" color="dark" (click)="editIncident(incident)">
-              <ion-icon slot="icon-only" name="pencil"></ion-icon>
-            </ion-button>
+            <div class="buttons-container">
+              <ion-button shape="round" size="small" fill="clear" color="dark" (click)="editIncident(incident.id!)">
+                <ion-icon slot="icon-only" name="pencil"></ion-icon>
+              </ion-button>
+              <ion-button shape="round" size="small" fill="clear" color="dark" (click)="removeIncident(incident.id!)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </div>
           </ion-card-title>
           <ion-card-subtitle>Created By: {{incident.userId}}</ion-card-subtitle>
         </ion-card-header>

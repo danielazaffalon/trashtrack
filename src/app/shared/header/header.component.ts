@@ -1,10 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonMenu, IonMenuButton } from '@ionic/angular/standalone';
-import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
-import { logOutOutline } from 'ionicons/icons';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonIcon, IonMenuButton } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -16,17 +13,8 @@ import { addIcons } from 'ionicons';
 })
 export class HeaderComponent {
   @Input() title = '';
+  @Input() icon = '';
 
-  constructor(private authService: AuthService, private router: Router) {
-    addIcons({
-      "log-out-outline": logOutOutline
-    });
-  }
-
-  logOut(){
-    this.authService.logout().then(()=>{
-      this.router.navigateByUrl('/login', { replaceUrl: true });
-    });
-  }
+  constructor() { }
 
 }
