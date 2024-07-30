@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
-	<h1>LOGO</h1>
-	<h2>Login</h2>
-	<p>Enter yout e-mail and password</p>
+	<div class="logo">
+		<img src="/assets/fullLogo.png">
+	</div>
 	<form (ngSubmit)="login()" [formGroup]="credentials">
 		<ion-item fill="solid" class="ion-margin-bottom">
 			<ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
@@ -10,7 +10,7 @@
 			<ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
 		</ion-item>
 
-		<ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
+		<ion-button type="submit" expand="block" [disabled]="!credentials.valid" color="secondary">Log in</ion-button>
 		<p>Or register <a href="/register">here</a></p>
 	</form>
 </ion-content>

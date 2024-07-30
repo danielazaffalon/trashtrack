@@ -7,7 +7,7 @@
     min-height: 70px;
 }
 
-.edit-icon {
+.delete-icon {
     position: absolute;
     background-color: white;
     padding: 5px;
@@ -23,4 +23,8 @@
 .icon-container {
     display: flex;
     justify-content: flex-end;
+}
+
+form{
+    padding: 10px 20px;
 }

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IonHeader, IonToolbar, IonMenu, IonTitle, IonContent, IonItem, IonList, IonIcon, IonLabel, IonMenuToggle, IonRouterLink } from "@ionic/angular/standalone";
 import { addIcons } from 'ionicons';
-import { map, settings } from 'ionicons/icons';
+import { map, settings, logOutOutline } from 'ionicons/icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidemenu',
@@ -13,8 +14,16 @@ import { map, settings } from 'ionicons/icons';
 })
 export class SidemenuComponent {
 
-  constructor() {
-    addIcons({ map, settings });
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
+    addIcons({ map, settings, "log-out-outline": logOutOutline });
   }
 
+  logOut(){
+    this.authService.logout().then(()=>{
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+    });
+  }
 }

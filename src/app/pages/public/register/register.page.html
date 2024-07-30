@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
-  <h1>LOGO</h1>
-	<h2>Create an account</h2>
-	<p>Please, fill the form</p>
+	<div class="logo">
+		<img src="/assets/fullLogo.png">
+	</div>
 	<form (ngSubmit)="register()" [formGroup]="credentials">
 		<ion-item fill="solid" class="ion-margin-bottom">
 			<ion-input type="text" placeholder="First Name" formControlName="firstName"></ion-input>

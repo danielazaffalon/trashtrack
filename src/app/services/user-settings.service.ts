@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IUser, UserAuth } from '../model/interfaces';
 import { Firestore, collection, doc, deleteDoc, updateDoc, setDoc, docData } from '@angular/fire/firestore';
-import { Observable, map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from './storage.service';
 

@@ -1,7 +1,7 @@
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { map, cog, warning } from 'ionicons/icons';
+import { map, list, warning } from 'ionicons/icons';
 import { SidemenuComponent } from 'src/app/shared/sidemenu/sidemenu.component';
 
 @Component({
@@ -17,7 +17,7 @@ export class TabsPage {
   constructor() {
     addIcons({
       map,
-      cog,
+      list,
       warning,
     })
   }

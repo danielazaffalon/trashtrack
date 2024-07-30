@@ -45,6 +45,18 @@
     --organic-color:#815a35;
     --ordinary-color:#616161;
 
+    --ion-color-primary: #007981;
+    --ion-color-primary-rgb: 0,121,129;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+    --ion-color-primary-shade: #006a72;
+    --ion-color-primary-tint: #1a868e;
+    --ion-color-secondary: #007981;
+    --ion-color-secondary-rgb: 0,121,129;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255,255,255;
+    --ion-color-secondary-shade: #006a72;
+    --ion-color-secondary-tint: #1a868e;
   }
   
   /*
@@ -75,7 +87,7 @@
   border-radius: 50%;
   color: #263238;
   display: flex;
-  font-size: 14px;
+  font-size: 18px;
   gap: 15px;
   height: 30px;
   justify-content: center;
@@ -211,7 +223,11 @@
 }
 
 .current-position ion-icon {
-  width: 40px;
-  height: 40px;
-  color: #100cdf;
+  width: 30px;
+  height: 30px;
+  color: #000000;
+  background: white;
+  border-radius: 100%;
+  padding: 8px;
+  box-shadow: 1px 1px 4px #746c6c;
 }
