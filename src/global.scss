@@ -79,15 +79,16 @@
   }
 
 /*
-* Property styles in unhighlighted state.
+* Container styles in unhighlighted state.
 */
-.property {
+.container {
   align-items: center;
   background-color: #FFFFFF;
+  box-shadow: 1px 1px 4px #746c6c;
   border-radius: 50%;
   color: #263238;
   display: flex;
-  font-size: 18px;
+  font-size: 20px;
   gap: 15px;
   height: 30px;
   justify-content: center;
@@ -98,47 +99,33 @@
   width: 30px;
 }
 
-.property::after {
-  border-left: 9px solid transparent;
-  border-right: 9px solid transparent;
-  border-top: 9px solid #FFFFFF;
-  content: "";
-  height: 0;
-  left: 50%;
-  position: absolute;
-  top: 95%;
-  transform: translate(-50%, 0);
-  transition: all 0.3s ease-out;
-  width: 0;
-  z-index: 1;
-}
-
-.property .icon {
+.container .icon {
   align-items: center;
   display: flex;
   justify-content: center;
-  color: #ffffff;
+  color: black;
 }
 
-.property .icon svg {
+.container .icon svg {
   height: 20px;
   width: auto;
 }
 
-.property .details {
+.container .details {
+  max-width: 200px;
   display: none;
   flex-direction: column;
   flex: 1;
 }
 
-.property .address {
+.container .address {
   color: #9E9E9E;
   font-size: 10px;
   margin-bottom: 2px;
   margin-top: 2px;
 }
 
-.property .title {
+.container .title {
   align-items: flex-end;
   display: flex;
   flex-direction: row;
@@ -146,7 +133,7 @@
   margin-bottom: 5px;
 }
 
-.property .features {
+.container .features {
   font-size: 11px;
   align-items: flex-end;
   display: flex;
@@ -156,7 +143,7 @@
   margin-top: 2px;
 }
 
-.property .features > div {
+.container .features > div {
   align-items: center;
   background: #F5F5F5;
   border-radius: 5px;
@@ -168,58 +155,53 @@
 }
 
 /*
- * Property styles in highlighted state.
+ * Container styles in highlighted state.
  */
-.property.highlight {
+.container.highlight {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
   width: auto;
   padding: 8px 15px;
   height: auto;
+  z-index: 2;
 }
 
-.property.highlight::after {
-  border-top: 9px solid #FFFFFF;
-}
-
-.property.highlight .details {
+.container.highlight .details {
   display: flex;
 }
 
-.property.highlight .icon svg {
+.container.highlight .icon svg {
   width: 80px;
   height: 80px;
 }
 
-/*
- * Clothes Trash icon colors.
- */
- .property.highlight:has(.clothes) .icon {
+.container .icon.clothes {
   color: var(--clothes-color);
-  }
-
- .property:not(.highlight):has(.clothes) {
-  background-color: var(--clothes-color);
 }
 
-.property:not(.highlight):has(.clothes)::after {
-  border-top: 9px solid var(--clothes-color);
-}
-
-/*
- * Special Trash icon colors.
- */
- .property.highlight:has(.special) .icon {
+.container .icon.special {
   color: var(--special-color);
-  }
-
- .property:not(.highlight):has(.special) {
-  background-color: var(--special-color);
 }
 
-.property:not(.highlight):has(.special)::after {
-  border-top: 9px solid var(--special-color);
+.container .icon.glass {
+  color: var(--glass-color);
+}
+
+.container .icon.paper {
+  color: var(--paper-color);
+}
+
+.container .icon.plastic {
+  color: var(--plastic-color);
+}
+
+.container .icon.orgainc {
+  color: var(--orgainc-color);
+}
+
+.container .icon.ordinary {
+  color: var(--ordinary-color);
 }
 
 .current-position ion-icon {

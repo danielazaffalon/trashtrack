@@ -3,11 +3,9 @@
     width: 150px; 
     max-width: 150px !important; /* any size */
     max-height: 150px !important; /* any size */
-    margin: auto;
     border-radius: 100%;
     position: relative;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 40px auto;
     }
 
 .profile-img {
@@ -43,5 +41,9 @@
 }
 
 form{
-    padding: 10px 20px;
+    padding: 0 20px;
+}
+
+ion-button {
+    padding-top: 20px;
 }
